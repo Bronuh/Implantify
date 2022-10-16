@@ -12,3 +12,6 @@ You can load this mod in any order you want
 - Some health conditions will not apply at all
 - Sometimes health conditions may be added to your pawns in the selection menu, but disappear after the game starts.
 - Some health conditions may break your scenario editor until you remove that scenario part and add it again.
+
+### Workshop link
+https://steamcommunity.com/sharedfiles/filedetails/?id=2876014288
