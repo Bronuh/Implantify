@@ -1,6 +1,6 @@
 # Implantify
  
-Implantify is a Rimworld ~~kludge~~ mod adds new scenario part that allows you to select more health conditions in scenario editor without manually editing each pawn. It was created for personal purposes, since I could not find another alternative.  
+Implantify is a Rimworld ~~kludge~~ mod that adds new scenario part that allows you to select more health conditions in scenario editor without manually editing each pawn. It was created for personal purposes, since I could not find another alternative.  
 This mod ***can't*** add ***any*** health condition to ***any*** race but still can do more than vanilla "Forced health conditions".  
   
 You are free to use this repository to make better forks of this mod, but please let me know if you publish it as I want to use a better version of this mod too.
