@@ -98,6 +98,33 @@ namespace Implantify
 					}
 				}
 			}
+
+			/// Attempt to scan surgery recipes for body parts
+			if (l.NullOrEmpty())
+			{
+				// Get all recipes containing target hediff
+				var recipes = DefDatabase<RecipeDef>.AllDefs.Where(def => def.addsHediff == h);
+
+				foreach(var recipeDef in recipes)
+				{
+					IEnumerable<BodyPartRecord> records;
+
+					// converting recipe body parts to body part records
+					foreach (var bodyPart in recipeDef.appliedOnFixedBodyParts)
+					{
+						records = p.RaceProps.body.AllParts.Where(part => part.def == bodyPart);
+
+						foreach (var bodyPartRecord in records)
+						{
+							if (!l.Contains(bodyPartRecord))
+							{
+								l.Add(bodyPartRecord);
+							}
+						}
+					}
+				}
+			}
+
 			if (l.NullOrEmpty())
 			{
 				l = p.GetListOfBodyPartRecordsByName(null, h, all: true);
@@ -107,8 +134,11 @@ namespace Implantify
 					l.Insert(0, null);
 				}
 			}
-			return l;
+			
+
+				return l;
 		}
+
 
 		public static bool IsHediffWithComps(this HediffDef h)
 		{

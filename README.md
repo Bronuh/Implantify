@@ -5,6 +5,11 @@ This mod ***can't*** add ***any*** health condition to ***any*** race but still 
   
 You are free to use this repository to make better forks of this mod, but please let me know if you publish it as I want to use a better version of this mod too.
 
+## 1.4 Update
+Added recipes scanning to find allowed body parts. Now even more health conditions can be applied!
+- tested on **Dojutsu Naruto** and **\[RH2\] Faction: V.O.I.D.**
+- 1.3 version still can't apply health conditions without body part tags
+
 ## Mod load order
 You can load this mod in any order you want
 
