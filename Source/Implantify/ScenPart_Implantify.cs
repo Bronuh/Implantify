@@ -104,10 +104,14 @@ namespace Implantify
 				var possibleParts = PossibleParts(HediffDef);
 				if (!possibleParts.NullOrEmpty() && !(possibleParts.First() is null))
 				{
+					if (BodyPart is null)
+					{
+						BodyPart = possibleParts.RandomElement();
+					}
 					Widgets.Label(rect2.LeftPart(0.3333f).Rounded(), "body part");
 					if (Widgets.ButtonText(rect2.RightPart(0.6666f).Rounded(), BodyPart.LabelCap))
 					{
-						FloatMenuUtility.MakeMenu(PossibleParts(HediffDef), (BodyPartRecord hd) => hd?.LabelCap ?? "Whole body", (BodyPartRecord hd) => delegate
+						FloatMenuUtility.MakeMenu(possibleParts, (BodyPartRecord hd) => hd?.LabelCap ?? "Whole body", (BodyPartRecord hd) => delegate
 						{
 							BodyPart = hd;
 						});
