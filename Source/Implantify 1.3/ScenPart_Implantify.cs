@@ -132,7 +132,7 @@ namespace Implantify
 		}
 
 
-
+		
 		/// <summary>
 		/// Data, used for save/load this scenPart
 		/// </summary>
@@ -143,8 +143,7 @@ namespace Implantify
 			{
 				Scribe_Defs.Look(ref hediffDef, label: "implantifyHediffDef");
 				Scribe_BodyParts.Look(ref bodyPart, label: "implantifyBodyPart");
-			}
-			catch { hediffDef = null; bodyPart = null; }
+			} catch { hediffDef = null; bodyPart = null; }
 		}
 
 
