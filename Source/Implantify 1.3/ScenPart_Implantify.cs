@@ -252,14 +252,23 @@ namespace Implantify
 				 * So there is attempt to find these body parts by the name of slected 'human' body part
 				 */
 				var newBodyPart = BodyPart;
-				var foundBodyParts = p.kindDef.GetListOfBodyPartRecordsByName(bodyPart.def.defName, HediffDef);
-				foreach(var foundBodyPart in foundBodyParts)
+				// GetListOfBodyPartRecordsByName defined in the HealthUtils class
+				List<BodyPartRecord> foundBodyParts = new List<BodyPartRecord>();
+				try
 				{
-					if (foundBodyPart.LabelCap.Equals(BodyPart.LabelCap))
+					foundBodyParts = p.kindDef.GetListOfBodyPartRecordsByName(bodyPart.def.defName, HediffDef);
+					foreach (var foundBodyPart in foundBodyParts)
 					{
-						newBodyPart = foundBodyPart;
-						break;
+						if (foundBodyPart.LabelCap.Equals(BodyPart.LabelCap))
+						{
+							newBodyPart = foundBodyPart;
+							break;
+						}
 					}
+				}
+				catch (Exception e)
+				{
+					Log.Error("Implantify.AddHediff: " + e.Message);
 				}
 
 				Hediff hediff = HediffMaker.MakeHediff(HediffDef, p, newBodyPart);
@@ -268,7 +277,10 @@ namespace Implantify
 				// IDK what this code does. Is it some kind of event system?
 				p.health.Notify_HediffChanged(hediff);
 			}
-			catch { }
+			catch (Exception e)
+			{
+				Log.Error(e.Message);
+			}
 			p.needs?.AddOrRemoveNeedsAsAppropriate();
 			p.health.summaryHealth.Notify_HealthChanged();
 		}

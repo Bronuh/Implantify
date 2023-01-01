@@ -8,7 +8,7 @@ You are free to use this repository to make better forks of this mod, but please
 ## 1.4 Update
 Added recipes scanning to find allowed body parts. Now even more health conditions can be applied!
 - tested on **Dojutsu Naruto** and **\[RH2\] Faction: V.O.I.D.**
-- 1.3 version still can't apply health conditions without body part tags
+- 1.3 and 1.4 versions now have the same functionality
 
 ## Mod load order
 You can load this mod in any order you want

@@ -190,6 +190,7 @@ namespace Implantify
 			// so I used vanilla colonist for the base body model, so hediffs that require custom body parts
 			// cannot be applied by this mod.
 			// Maybe...
+			// GetListOfAllowedBodyPartRecords defined in the HealthUtils class
 			var list = PawnKindDefOf.Colonist.GetListOfAllowedBodyPartRecords(HediffDef);
 
 			return list;
@@ -215,6 +216,7 @@ namespace Implantify
 			}
 			if (hediff.hediffClass == typeof(Hediff_AddedPart) || hediff.hediffClass == typeof(Hediff_Injury) || hediff.hediffClass == typeof(HediffWithComps) || hediff.hediffClass == typeof(Hediff_MissingPart) || hediff.hediffClass == typeof(Hediff_Implant))
 			{
+				Log.Message($"{hediff.LabelCap} don't need bodypart");
 				return true;
 			}
 			return false;
@@ -253,23 +255,35 @@ namespace Implantify
 				 * So there is attempt to find these body parts by the name of slected 'human' body part
 				 */
 				var newBodyPart = BodyPart;
-				var foundBodyParts = p.kindDef.GetListOfBodyPartRecordsByName(bodyPart.def.defName, HediffDef);
-				foreach(var foundBodyPart in foundBodyParts)
+				// GetListOfBodyPartRecordsByName defined in the HealthUtils class
+				List<BodyPartRecord> foundBodyParts = new List<BodyPartRecord>();
+				try
 				{
-					if (foundBodyPart.LabelCap.Equals(BodyPart.LabelCap))
+					foundBodyParts = p.kindDef.GetListOfBodyPartRecordsByName(bodyPart.def.defName, HediffDef);
+					foreach (var foundBodyPart in foundBodyParts)
 					{
-						newBodyPart = foundBodyPart;
-						break;
+						if (foundBodyPart.LabelCap.Equals(BodyPart.LabelCap))
+						{
+							newBodyPart = foundBodyPart;
+							break;
+						}
 					}
 				}
-
+				catch(Exception e)
+				{
+					Log.Error("Implantify.AddHediff: "+e.Message);
+				}
+				
 				Hediff hediff = HediffMaker.MakeHediff(HediffDef, p, newBodyPart);
 				p.health.AddHediff(hediff, newBodyPart);
 
 				// IDK what this code does. Is it some kind of event system?
 				p.health.Notify_HediffChanged(hediff);
 			}
-			catch { }
+			catch (Exception e)
+			{
+				Log.Error(e.Message);
+			}
 			p.needs?.AddOrRemoveNeedsAsAppropriate();
 			p.health.summaryHealth.Notify_HealthChanged();
 		}

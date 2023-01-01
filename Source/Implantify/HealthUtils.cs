@@ -18,7 +18,7 @@ namespace Implantify
 			List<BodyPartRecord> list = new List<BodyPartRecord>();
 			if (p != null && h != null)
 			{
-				if (defName == "WholeBody")
+				if (defName is null || defName == "WholeBody")
 				{
 					list.Add(null);
 				}
@@ -347,7 +347,7 @@ namespace Implantify
 
 		public static bool IsForWholeBody(this HediffDef h)
 		{
-			return h.IsAddiction || h.defName.ToLower().Contains("tolerance") || h.defName.EndsWith("High") || h.defName == "PsychicEntropy" || h.defName == "PsychicShock" || h.defName == "NeuralHealRecoveryGain" || h.defName == "NeuralSupercharge" || h.defName == "WorkDrive" || h.defName == "ImmunityDrive" || h.defName == "WorkFocus" || h.defName == "PreachHealth" || h.defName == "BerserkTrance" || h.defName == "CatatonicBreakdown" || h.defName == "BloodLoss" || h.defName.EndsWith("Flu") || h.defName.EndsWith("Plague") || h.defName == "Malaria" || h.defName == "SleepingSickness" || h.defName == "Anesthetic" || h.defName == "Frail" || h.defName == "CryptosleepSickness" || h.defName == "FoodPoisoning" || h.defName == "ToxicBuildup" || h.defName == "Pregnant" || h.defName == "DrugOverdose" || h.defName == "ResurrectionSickness" || h.defName == "Malnutrition";
+			return h.IsAddiction || h.defName.ToLower().Contains("tolerance") || h.defName.ToLower().Contains("regen") || h.defName.ToLower().Contains("lactation") || h.defName.ToLower().Contains("lactating") || h.defName.EndsWith("High") || h.defName == "PsychicEntropy" || h.defName == "PsychicShock" || h.defName == "NeuralHealRecoveryGain" || h.defName == "NeuralSupercharge" || h.defName == "WorkDrive" || h.defName == "ImmunityDrive" || h.defName == "WorkFocus" || h.defName == "PreachHealth" || h.defName == "BerserkTrance" || h.defName == "CatatonicBreakdown" || h.defName == "BloodLoss" || h.defName.EndsWith("Flu") || h.defName.EndsWith("Plague") || h.defName == "Malaria" || h.defName == "SleepingSickness" || h.defName == "Anesthetic" || h.defName == "Frail" || h.defName == "CryptosleepSickness" || h.defName == "FoodPoisoning" || h.defName == "ToxicBuildup" || h.defName == "Pregnant" || h.defName == "DrugOverdose" || h.defName == "ResurrectionSickness" || h.defName == "Malnutrition";
 		}
 
 		#endregion
