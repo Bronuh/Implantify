@@ -210,7 +210,7 @@ public class ScenPart_Implantify : ScenPart_PawnModifier
 		}
 		if (hediff.hediffClass == typeof(Hediff_AddedPart) || hediff.hediffClass == typeof(Hediff_Injury) || hediff.hediffClass == typeof(HediffWithComps) || hediff.hediffClass == typeof(Hediff_MissingPart) || hediff.hediffClass == typeof(Hediff_Implant))
 		{
-			Log.Message($"{hediff.LabelCap} don't need bodypart");
+			// Log.Message($"{hediff.LabelCap} don't need bodypart");
 			return true;
 		}
 		return false;
@@ -265,7 +265,7 @@ public class ScenPart_Implantify : ScenPart_PawnModifier
 			}
 			catch(Exception e)
 			{
-				Log.Error("Implantify.AddHediff: "+e.Message);
+				// Log.Error("Implantify.AddHediff: "+e.Message);
 			}
 				
 			Hediff hediff = HediffMaker.MakeHediff(HediffDef, p, newBodyPart);
@@ -276,7 +276,7 @@ public class ScenPart_Implantify : ScenPart_PawnModifier
 		}
 		catch (Exception e)
 		{
-			Log.Error(e.Message);
+			//Log.Error(e.Message);
 		}
 		p.needs?.AddOrRemoveNeedsAsAppropriate();
 		p.health.summaryHealth.Notify_HealthChanged();
