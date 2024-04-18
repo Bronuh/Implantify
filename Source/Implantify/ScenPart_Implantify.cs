@@ -83,46 +83,54 @@ public class ScenPart_Implantify : ScenPart_PawnModifier
 		Rect rect3 = new Rect(scenPartRect.x, scenPartRect.y + scenPartRect.height / 2f, scenPartRect.width, scenPartRect.height / 2f);
 		// 
 
-		// Hediff selection button
-		if (Widgets.ButtonText(rect, HediffDef?.LabelCap ?? new TaggedString("No Hediff")))
+		try
 		{
-			FloatMenuUtility.MakeMenu(PossibleHediffs(), (HediffDef hd) => hd.LabelCap, (HediffDef hd) => delegate
-			{
-				HediffDef = hd;
-				BodyPart = PossibleParts(HediffDef).RandomElement();
-			});
-		}
 
-		// Body part selection button
-		if (HediffDef != null)
-		{
-			if (NeedBodyPart(HediffDef))
+			// Hediff selection button
+			if (Widgets.ButtonText(rect, HediffDef?.LabelCap ?? new TaggedString("No Hediff")))
 			{
-				var possibleParts = PossibleParts(HediffDef);
-				if (!possibleParts.NullOrEmpty() && !(possibleParts.First() is null))
+				FloatMenuUtility.MakeMenu(PossibleHediffs(), (HediffDef hd) => hd.LabelCap, (HediffDef hd) => delegate
 				{
-					if (BodyPart is null)
+					HediffDef = hd;
+					BodyPart = PossibleParts(HediffDef).RandomElement();
+				});
+			}
+
+			// Body part selection button
+			if (HediffDef != null)
+			{
+				if (NeedBodyPart(HediffDef))
+				{
+					var possibleParts = PossibleParts(HediffDef);
+					if (!possibleParts.NullOrEmpty() && !(possibleParts.First() is null))
 					{
-						BodyPart = possibleParts.RandomElement();
-					}
-					Widgets.Label(rect2.LeftPart(0.3333f).Rounded(), "body part");
-					if (Widgets.ButtonText(rect2.RightPart(0.6666f).Rounded(), BodyPart.LabelCap))
-					{
-						FloatMenuUtility.MakeMenu(possibleParts, (BodyPartRecord hd) => hd?.LabelCap ?? "Whole body", (BodyPartRecord hd) => delegate
+						if (BodyPart is null)
 						{
-							BodyPart = hd;
-						});
+							BodyPart = possibleParts.RandomElement();
+						}
+
+						Widgets.Label(rect2.LeftPart(0.3333f).Rounded(), "body part");
+						if (Widgets.ButtonText(rect2.RightPart(0.6666f).Rounded(), BodyPart.LabelCap))
+						{
+							FloatMenuUtility.MakeMenu(possibleParts,
+								(BodyPartRecord hd) => hd?.LabelCap ?? "Whole body",
+								(BodyPartRecord hd) => delegate { BodyPart = hd; });
+						}
 					}
-				}
-				else
-				{
-					BodyPart = null;
+					else
+					{
+						BodyPart = null;
+					}
 				}
 			}
-		}
 
-		// Vanilla settings (chance, affected pawns)
-		DoPawnModifierEditInterface(rect3.BottomPartPixels(ScenPart.RowHeight * 2f));
+			// Vanilla settings (chance, affected pawns)
+			DoPawnModifierEditInterface(rect3.BottomPartPixels(ScenPart.RowHeight * 2f));
+		}
+		catch(Exception e)
+		{
+			LocalLog.Error("Implantify.DoEditInterface: "+e.Message);
+		}
 	}
 
 
@@ -210,7 +218,7 @@ public class ScenPart_Implantify : ScenPart_PawnModifier
 		}
 		if (hediff.hediffClass == typeof(Hediff_AddedPart) || hediff.hediffClass == typeof(Hediff_Injury) || hediff.hediffClass == typeof(HediffWithComps) || hediff.hediffClass == typeof(Hediff_MissingPart) || hediff.hediffClass == typeof(Hediff_Implant))
 		{
-			// Log.Message($"{hediff.LabelCap} don't need bodypart");
+			LocalLog.Message($"{hediff.LabelCap} don't need bodypart");
 			return true;
 		}
 		return false;
@@ -265,7 +273,7 @@ public class ScenPart_Implantify : ScenPart_PawnModifier
 			}
 			catch(Exception e)
 			{
-				// Log.Error("Implantify.AddHediff: "+e.Message);
+				LocalLog.Error("Implantify.AddHediff: "+e.Message);
 			}
 				
 			Hediff hediff = HediffMaker.MakeHediff(HediffDef, p, newBodyPart);
@@ -276,7 +284,7 @@ public class ScenPart_Implantify : ScenPart_PawnModifier
 		}
 		catch (Exception e)
 		{
-			//Log.Error(e.Message);
+			LocalLog.Error(e.Message);
 		}
 		p.needs?.AddOrRemoveNeedsAsAppropriate();
 		p.health.summaryHealth.Notify_HealthChanged();
